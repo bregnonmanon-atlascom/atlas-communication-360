@@ -1,0 +1,872 @@
+<title>Atlas Communication 360°</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;0,900;1,600&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style id="app-style">
+:root{
+  --orange:#E86227;
+  --orange-dark:#C24E17;
+  --yellow:#FFC919;
+  --plum:#331832;
+  --plum-soft:#4E2E4C;
+  --cream:#FFFAEB;
+  --white:#FFFFFF;
+  --ink:#331832;
+  --ink-soft:rgba(51,24,50,.72);
+  --ink-faint:rgba(51,24,50,.5);
+  --line:rgba(51,24,50,.14);
+  --radius-lg:28px;
+  --radius-md:18px;
+  --radius-sm:10px;
+  --shadow:0 20px 44px -22px rgba(51,24,50,.4);
+  --maxw:1180px;
+  color-scheme:light;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+[hidden]{display:none!important;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;}
+h1,h2,h3,.disp{font-family:'Fraunces',Georgia,serif;}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.08;}
+p{margin:0;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:24px;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Montserrat',sans-serif;font-weight:800;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--orange);
+}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--orange);}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 26px;border-radius:100px;font-weight:700;font-size:.95rem;
+  border:2px solid transparent;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:var(--orange);color:var(--white);box-shadow:0 10px 24px -10px rgba(232,98,39,.6);}
+.btn-primary:hover{background:var(--orange-dark);}
+.btn-ghost{background:transparent;border-color:var(--plum);color:var(--plum);}
+.btn-ghost:hover{background:var(--plum);color:var(--cream);}
+.btn-light{background:var(--cream);color:var(--plum);}
+.btn-light:hover{background:var(--white);}
+.btn-sm{padding:9px 16px;font-size:.82rem;border-radius:100px;}
+.btn-danger{background:transparent;border-color:#B23A3A;color:#B23A3A;}
+.btn-danger:hover{background:#B23A3A;color:var(--white);}
+.icon{width:22px;height:22px;flex-shrink:0;}
+.icon-lg{width:30px;height:30px;}
+
+/* ---------- Nav ---------- */
+#site-nav{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+  background:rgba(255,250,235,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px;}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;}
+.brand-name{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--plum);}
+.brand-tag{display:block;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.55rem;letter-spacing:.16em;color:var(--orange);text-transform:uppercase;margin-top:-2px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{
+  padding:10px 14px;border-radius:100px;font-weight:600;font-size:.92rem;color:var(--ink-soft);
+  transition:background .15s ease,color .15s ease;
+}
+.nav-links a:hover{background:rgba(232,98,39,.1);color:var(--orange-dark);}
+.nav-links a.active{background:var(--plum);color:var(--cream);}
+.nav-cta{display:flex;align-items:center;gap:10px;}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--plum);}
+@media (max-width:860px){
+  .nav-links{
+    position:fixed;inset:64px 0 0 0;background:var(--cream);flex-direction:column;align-items:stretch;
+    padding:12px 24px 28px;gap:4px;transform:translateY(-8px);opacity:0;pointer-events:none;transition:opacity .18s ease, transform .18s ease;
+    border-top:1px solid var(--line);overflow-y:auto;
+  }
+  .nav-links.open{opacity:1;transform:translateY(0);pointer-events:auto;}
+  .nav-links a{padding:14px 10px;font-size:1.05rem;text-align:left;}
+  .nav-toggle{display:inline-flex;}
+}
+
+/* ---------- Wave dividers ---------- */
+.wave{display:block;width:100%;height:44px;position:relative;top:1px;}
+.wave-cream-to-plum{color:var(--cream);}
+.wave-plum-to-cream{color:var(--cream);}
+.wave-cream-to-orange{color:var(--cream);}
+.wave-orange-to-cream{color:var(--orange);}
+
+/* ---------- Sections ---------- */
+.page{display:none;}
+.page.active{display:block;}
+section{padding-block:76px;}
+.section-plum{background:var(--plum);color:var(--cream);}
+.section-orange{background:var(--orange);color:var(--white);}
+.section-tight{padding-block:56px;}
+.section-head{max-width:640px;margin-bottom:44px;}
+.section-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);margin-top:10px;}
+.section-head p{margin-top:14px;color:var(--ink-soft);font-size:1.02rem;}
+.section-plum .section-head p,.section-orange .section-head p{color:rgba(255,255,255,.82);}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:64px 40px;position:relative;}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;}
+.hero h1{font-size:clamp(2.3rem,5vw,3.7rem);color:var(--plum);}
+.hero h1 em{font-style:normal;color:var(--orange);}
+.hero-lede{margin-top:20px;font-size:1.1rem;color:var(--ink-soft);max-width:46ch;}
+.hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px;}
+.badge{
+  padding:8px 16px;border-radius:100px;background:var(--white);border:1px solid var(--line);
+  font-weight:700;font-size:.82rem;color:var(--plum-soft);
+}
+.hero-mark{
+  aspect-ratio:1/1;max-width:340px;margin-inline:auto;background:var(--orange);border-radius:44px;
+  display:flex;align-items:center;justify-content:center;position:relative;box-shadow:var(--shadow);
+}
+.hero-mark .rays{position:absolute;top:14%;left:50%;transform:translateX(-50%);display:flex;gap:10px;}
+.hero-mark .rays span{width:5px;height:34px;background:var(--yellow);border-radius:4px;}
+.hero-mark .rays span:nth-child(2){height:44px;}
+.hero-mark .rays span:nth-child(4){height:44px;}
+.hero-bubble{
+  width:64%;aspect-ratio:1/.72;background:var(--yellow);border-radius:26px;position:relative;
+  display:flex;align-items:center;justify-content:center;margin-top:8%;
+}
+.hero-bubble::after{content:"";position:absolute;bottom:-16px;left:26%;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:20px solid var(--yellow);}
+.hero-bubble span{font-family:'Fraunces',serif;font-weight:700;font-size:3.2rem;color:var(--plum);}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;}.hero-mark{margin-top:20px;}}
+
+/* ---------- Cards / grids ---------- */
+.grid{display:grid;gap:22px;}
+.grid-2{grid-template-columns:1fr 1fr;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-5{grid-template-columns:repeat(5,1fr);}
+@media (max-width:980px){.grid-3{grid-template-columns:repeat(2,1fr);}.grid-5{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:640px){.grid-2,.grid-3,.grid-5{grid-template-columns:1fr;}}
+
+.card{
+  background:var(--white);border-radius:var(--radius-md);padding:26px;border:1px solid var(--line);
+}
+.card-persona{background:var(--yellow);border:none;padding:26px;border-radius:var(--radius-md);}
+.card-persona h3{font-size:1.1rem;color:var(--plum);}
+.card-persona .kicker{display:block;font-weight:800;font-size:.7rem;letter-spacing:.1em;color:var(--orange-dark);text-transform:uppercase;margin:4px 0 12px;}
+.card-persona ul{list-style:none;margin:0 0 12px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;}
+.card-persona li{font-weight:600;font-size:.92rem;position:relative;padding-left:14px;}
+.card-persona li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--orange);}
+.card-persona p{font-size:.9rem;color:var(--plum-soft);}
+
+.service-card{display:flex;flex-direction:column;gap:14px;}
+.service-icon{
+  width:52px;height:52px;border-radius:16px;background:var(--cream);display:flex;align-items:center;justify-content:center;color:var(--orange);
+}
+.service-card h3{font-size:1.15rem;}
+.service-card p{color:var(--ink-soft);font-size:.95rem;}
+
+.value-row{display:flex;flex-wrap:wrap;gap:14px;}
+.value-pill{
+  display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);
+  border-radius:100px;padding:10px 18px 10px 12px;font-weight:700;font-size:.9rem;
+}
+.value-pill .dot{width:34px;height:34px;border-radius:50%;background:var(--orange);color:var(--white);display:flex;align-items:center;justify-content:center;}
+
+/* portfolio */
+.case-card{
+  border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--line);background:var(--white);
+  display:flex;flex-direction:column;
+}
+.case-visual{
+  height:150px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;
+  font-weight:700;font-size:1.5rem;color:var(--white);text-align:center;padding:18px;
+}
+.case-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.case-cat{font-weight:800;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-dark);}
+.case-body h3{font-size:1.08rem;}
+.case-body p{color:var(--ink-soft);font-size:.9rem;flex:1;}
+.case-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:6px;}
+
+/* posts */
+.post-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);padding:26px;}
+.post-meta{display:flex;align-items:center;gap:10px;color:var(--ink-faint);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.post-card h3{margin-top:10px;font-size:1.3rem;}
+.post-excerpt{margin-top:10px;color:var(--ink-soft);}
+.post-body{margin-top:14px;color:var(--ink-soft);white-space:pre-wrap;border-top:1px dashed var(--line);padding-top:14px;}
+.post-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.post-list{display:flex;flex-direction:column;gap:18px;}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+@media (max-width:700px){.contact-grid{grid-template-columns:1fr;}}
+.contact-card{background:var(--white);border-radius:var(--radius-md);padding:24px;display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);}
+.contact-card .service-icon{background:var(--cream);}
+.contact-card h3{font-size:1rem;}
+.copy-row{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
+.copy-value{font-weight:700;font-size:.98rem;color:var(--plum);word-break:break-word;}
+
+/* footer */
+footer{background:var(--plum);color:rgba(255,250,235,.86);padding-block:52px 30px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;}
+@media (max-width:700px){.footer-grid{grid-template-columns:1fr;}}
+footer h4{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);margin:0 0 14px;}
+footer a{display:block;padding:5px 0;color:rgba(255,250,235,.86);font-size:.92rem;}
+footer a:hover{color:var(--yellow);}
+.footer-bottom{
+  margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,250,235,.16);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  font-size:.82rem;color:rgba(255,250,235,.6);
+}
+
+/* admin */
+.post-actions-admin{display:inline-flex;gap:10px;}
+#admin-bar{
+  position:fixed;left:16px;bottom:16px;z-index:80;background:var(--plum);color:var(--cream);
+  border-radius:100px;padding:10px 10px 10px 18px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 16px 32px -14px rgba(0,0,0,.5);font-size:.85rem;font-weight:700;
+}
+#admin-bar .dot{width:8px;height:8px;border-radius:50%;background:#6FCF97;}
+.section-toolbar{display:flex;justify-content:flex-end;margin-bottom:18px;}
+.empty-note{color:var(--ink-faint);font-style:italic;padding:20px 0;}
+
+/* modal */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(51,24,50,.55);z-index:100;display:flex;align-items:flex-start;justify-content:center;
+  padding:40px 16px;overflow-y:auto;
+}
+.modal{
+  background:var(--white);border-radius:var(--radius-md);padding:28px;max-width:560px;width:100%;
+  box-shadow:var(--shadow);
+}
+.modal h3{font-size:1.3rem;margin-bottom:18px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-weight:700;font-size:.82rem;margin-bottom:6px;color:var(--plum-soft);}
+.field input,.field textarea{
+  width:100%;padding:11px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--line);
+  font-family:'Montserrat',sans-serif;font-size:.95rem;background:var(--cream);color:var(--ink);
+}
+.field textarea{resize:vertical;min-height:90px;}
+.field input:focus,.field textarea:focus{outline:2px solid var(--orange);outline-offset:1px;}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:8px;flex-wrap:wrap;}
+
+/* toast */
+#toast{
+  position:fixed;bottom:16px;right:16px;z-index:120;background:var(--plum);color:var(--cream);
+  padding:14px 18px;border-radius:var(--radius-sm);font-weight:600;font-size:.9rem;box-shadow:var(--shadow);
+  max-width:320px;transform:translateY(20px);opacity:0;pointer-events:none;transition:transform .2s ease,opacity .2s ease;
+}
+#toast.show{transform:translateY(0);opacity:1;}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+
+<div id="app"></div>
+
+<script type="application/json" id="site-data">__SITE_DATA_JSON__</script>
+
+<script id="app-script">
+(function(){
+"use strict";
+
+var SEED_DATA = {
+  portfolio: [
+    {id:"p1", title:"Champagne Pascal Machet", category:"Community management", description:"Animation des réseaux sociaux d'une maison de champagne familiale : mise en valeur du vignoble, des vendanges et de l'univers de la maison au fil des saisons.", color:"var(--orange)"},
+    {id:"p2", title:"Château de Montrésor", category:"Communication digitale", description:"Une présence Instagram immersive pour faire rayonner un patrimoine historique du Val de Loire auprès d'un public curieux et engagé.", color:"var(--plum)"},
+    {id:"p3", title:"Morbihan Cup", category:"Habillage événementiel", description:"Conception des textiles et supports visuels d'un tournoi de golf, pour une identité sportive cohérente du practice aux vestiaires.", color:"var(--orange-dark)"},
+    {id:"p4", title:"Wine Paris × INEXPO", category:"Signalétique salon", description:"Habillage graphique d'un stand professionnel pour un rendez-vous international du monde du vin.", color:"var(--plum-soft)"},
+    {id:"p5", title:"Coopérative de Vendôme", category:"Création graphique", description:"Affiche et supports de communication pour un événement local fédérateur, pensés pour marquer les esprits.", color:"var(--orange)"},
+    {id:"p6", title:"Gîte l'Orée des Vignes", category:"Brand book & print", description:"Élaboration d'une identité visuelle complète et de ses déclinaisons imprimées pour un hébergement touristique.", color:"var(--plum)"}
+  ],
+  posts: [
+    {id:"n1", title:"Bienvenue sur le nouveau site d'Atlas Communication 360°", date:"2026-09-24", excerpt:"L'agence dévoile son site vitrine, pensé avec la même identité pétillante, audacieuse et chaleureuse que chaque projet client.", body:"Après avoir construit notre propre charte graphique — la même rigueur que nous mettons au service de nos clients — nous sommes fiers de vous présenter ce nouvel espace. Vous y retrouverez nos services, nos réalisations et l'actualité de l'agence, mise à jour directement depuis cette page.\n\nBonne visite, et à très vite pour faire rayonner votre prochain projet."},
+    {id:"n2", title:"5 réflexes pour une présence Instagram plus vivante", date:"2026-09-10", excerpt:"Community management : quelques principes simples pour garder un compte actif, cohérent et proche de sa communauté.", body:"1. Publier avec régularité plutôt qu'en rafale : un rythme tenable vaut mieux qu'un pic suivi d'un silence.\n2. Répondre aux commentaires et messages : la proximité se construit dans l'échange, pas seulement dans la publication.\n3. Varier les formats (photo, carrousel, vidéo courte) pour garder l'attention.\n4. Documenter les coulisses autant que le résultat fini : c'est souvent ce qui crée la confiance.\n5. Mesurer ce qui fonctionne et ajuster la ligne éditoriale en conséquence, sans jamais perdre l'identité de la marque."},
+    {id:"n3", title:"Pourquoi une charte graphique change tout", date:"2026-08-28", excerpt:"Couleurs, typographies, ton : une identité claire fait gagner du temps et de la cohérence sur chaque support.", body:"Une charte graphique n'est pas un exercice de style réservé aux grandes marques. C'est un outil de travail : elle évite de repartir de zéro à chaque support, elle aligne toute une équipe sur un même univers, et elle rend une marque reconnaissable au premier coup d'œil, sur les réseaux comme sur le terrain.\n\nC'est exactement la méthode que nous appliquons à Atlas, et celle que nous mettons au service de chaque client, du logo jusqu'au moindre post."}
+  ]
+};
+
+var NAV_ITEMS = [
+  {hash:"accueil", label:"Accueil"},
+  {hash:"agence", label:"L'agence"},
+  {hash:"services", label:"Services"},
+  {hash:"realisations", label:"Réalisations"},
+  {hash:"actus", label:"Actualités"},
+  {hash:"contact", label:"Contact"}
+];
+
+/* ---------- icons ---------- */
+function icon(name){
+  var p = {
+    sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+    people:'<circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="9" r="2.4"/><path d="M2.8 20c.6-3.4 3-5.4 5.7-5.4s5.1 2 5.7 5.4M14.6 20c.4-2.6 1.9-4.4 4-4.9"/>',
+    compass:'<circle cx="12" cy="12" r="9"/><path d="M14.8 9.2l-2 5.6-5.6 2 2-5.6 5.6-2z"/>',
+    plane:'<path d="M21 3L2.5 10.8c-.6.25-.55 1.13.08 1.3L11 14.5l2.4 8.4c.2.66 1.1.7 1.35.06L21 3z"/><path d="M11 14.5L21 3"/>',
+    pencil:'<path d="M4 20l.9-4L16 4.9a1.6 1.6 0 0 1 2.3 0l.8.8a1.6 1.6 0 0 1 0 2.3L8 19.1 4 20z"/><path d="M14.5 6.4l3.1 3.1"/>',
+    cap:'<path d="M12 4l10 5-10 5-10-5 10-5z"/><path d="M6.5 11v5c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-5"/>',
+    check:'<circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.6"/>',
+    mail:'<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/>',
+    phone:'<path d="M6.6 4.5l2.4-.6 2 4.2-1.6 1.6c.6 2 2.1 3.5 4.1 4.1l1.6-1.6 4.2 2-.6 2.4c-.4 1.7-2 2.8-3.7 2.4C9.6 18 5 13.4 4.2 8.2c-.3-1.7.7-3.3 2.4-3.7z"/>',
+    insta:'<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1"/>',
+    menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+    close:'<path d="M6 6l12 12M18 6L6 18"/>',
+    plus:'<path d="M12 5v14M5 12h14"/>',
+    edit:'<path d="M4 20l.6-3.2L15.8 5.6a1.4 1.4 0 0 1 2 0l.6.6a1.4 1.4 0 0 1 0 2L7.2 19.4 4 20z"/>',
+    trash:'<path d="M5 7h14M9 7V5.4c0-.7.6-1.4 1.4-1.4h3.2c.8 0 1.4.7 1.4 1.4V7M7 7l.9 12c.05.9.8 1.6 1.7 1.6h4.8c.9 0 1.65-.7 1.7-1.6L17 7"/>',
+    copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>'
+  }[name] || '';
+  return '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';
+}
+
+function esc(s){
+  return String(s==null?"":s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+function fmtDate(iso){
+  try{
+    var d = new Date(iso+"T00:00:00");
+    return d.toLocaleDateString("fr-FR", {day:"numeric", month:"long", year:"numeric"});
+  }catch(e){ return iso; }
+}
+function uid(prefix){ return prefix + "_" + Math.random().toString(36).slice(2,9); }
+
+/* ---------- state ---------- */
+var state = null;
+try{
+  var raw = document.getElementById("site-data").textContent;
+  state = JSON.parse(raw);
+  if(!state || !state.portfolio || !state.posts) throw new Error("empty");
+}catch(e){
+  state = JSON.parse(JSON.stringify(SEED_DATA));
+}
+
+var canEdit = false;
+var artifactCap = null;
+
+/* ---------- static markup fragments ---------- */
+function waveSVG(cls, flip){
+  var d = flip
+    ? "M0,32 C 200,0 400,60 600,30 C 800,0 1000,55 1200,28 L1200,60 L0,60 Z"
+    : "M0,28 C 200,60 400,0 600,30 C 800,58 1000,5 1200,32 L1200,0 L0,0 Z";
+  return '<svg class="wave '+cls+'" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="'+d+'" fill="currentColor"/></svg>';
+}
+
+function navHTML(){
+  var links = NAV_ITEMS.map(function(it){
+    return '<a href="#'+it.hash+'" data-hash="'+it.hash+'">'+it.label+'</a>';
+  }).join("");
+  return ''+
+  '<header id="site-nav">'+
+    '<div class="wrap nav-inner">'+
+      '<a class="brand" href="#accueil" data-hash="accueil" aria-label="Atlas Communication, retour à l\'accueil">'+
+        '<span style="width:38px;height:38px;border-radius:11px;background:var(--orange);display:flex;align-items:center;justify-content:center;color:var(--yellow);flex-shrink:0;">'+
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8.5 4.2l1.4 4M15.5 4.2l-1.4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="6" y="9" width="12" height="9" rx="3" fill="currentColor"/><text x="12" y="16.4" font-family="Fraunces, serif" font-weight="700" font-size="8" fill="#331832" text-anchor="middle">a</text></svg>'+
+        '</span>'+
+        '<span><span class="brand-name">Atlas</span><span class="brand-tag">Communication 360°</span></span>'+
+      '</a>'+
+      '<nav class="nav-links" id="nav-links">'+links+'</nav>'+
+      '<div class="nav-cta">'+
+        '<a class="btn btn-primary btn-sm" href="#contact" data-hash="contact">Devis</a>'+
+        '<button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">'+icon("menu")+'</button>'+
+      '</div>'+
+    '</div>'+
+  '</header>';
+}
+
+function heroHTML(){
+  return ''+
+  '<section class="hero"><div class="wrap hero-grid">'+
+    '<div>'+
+      '<span class="eyebrow">Agence de communication 360°</span>'+
+      '<h1>Faire émerger les idées<br>et les faire <em>rayonner</em>.</h1>'+
+      '<p class="hero-lede">Atlas Communication accompagne les marques qui veulent grandir : community management, création de contenu, stratégie commerciale, événementiel et formation, pensés dans leur ensemble plutôt qu\'en silos.</p>'+
+      '<div class="hero-actions">'+
+        '<a class="btn btn-primary" href="#services" data-hash="services">Découvrir nos services</a>'+
+        '<a class="btn btn-ghost" href="#realisations" data-hash="realisations">Voir nos réalisations</a>'+
+      '</div>'+
+      '<div class="hero-badges">'+
+        ['Engagée','Fiable','Proactive','Créative'].map(function(b){return '<span class="badge">'+b+'</span>';}).join('')+
+      '</div>'+
+    '</div>'+
+    '<div class="hero-mark">'+
+      '<div class="rays"><span></span><span></span><span></span><span></span><span></span></div>'+
+      '<div class="hero-bubble"><span>a</span></div>'+
+    '</div>'+
+  '</div></section>';
+}
+
+function agenceHTML(){
+  var personas = [
+    {kicker:"À quoi reconnaît-on Atlas ?", title:"Physique", items:["Colorée","Chaleureuse","Dynamique","Expressive"], text:"Un univers visuel solaire et affirmé qui attire l'œil et inspire la confiance."},
+    {kicker:"Si Atlas était une", title:"Personnalité", items:["Engagée","Proactive","Fiable","Créative"], text:"Engagée et compétente, la marque prend les défis en main et transforme les problématiques en solutions concrètes."},
+    {kicker:"La relation avec ses clients", title:"Relation", items:["Écouter","Proposer","Conseiller","Faire grandir"], text:"Un partenaire de confiance sur lequel le client peut s'appuyer, jusqu'à la fin de son projet."},
+    {kicker:"Quelles sont nos valeurs ?", title:"Culture", items:["Curiosité","Transmission","Proximité","Vision globale"], text:"Une communication pensée dans son ensemble, où expertise, créativité et proximité construisent des solutions pertinentes."},
+    {kicker:"Comment Atlas voit ses clients", title:"Reflet", items:["Ambitieux","Passionnés","Impliqués","Ouverts aux idées"], text:"Des clients qui souhaitent faire grandir leur projet et professionnaliser leur communication."},
+    {kicker:"Comment le client se sent-il ?", title:"Mentalisation", items:["Accompagné","Rassuré","Compris","Confiant"], text:"Avec Atlas, le client sait qu'il peut s'appuyer sur une expertise et avancer sereinement."}
+  ];
+  var cards = personas.map(function(p){
+    return '<div class="card card-persona">'+
+      '<h3>'+p.title+'</h3><span class="kicker">'+esc(p.kicker)+'</span>'+
+      '<ul>'+p.items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul>'+
+      '<p>'+p.text+'</p>'+
+    '</div>';
+  }).join("");
+
+  return ''+
+  '<section class="section-tight"><div class="wrap">'+
+    '<div class="grid grid-2" style="align-items:center;gap:48px;">'+
+      '<div>'+
+        '<span class="eyebrow">Plus qu\'une agence</span>'+
+        '<h2 style="margin-top:10px;font-size:clamp(1.7rem,3.4vw,2.5rem);">Manon Bregnon, fondatrice d\'Atlas Communication 360°</h2>'+
+        '<p style="margin-top:16px;color:var(--ink-soft);">À la fin de ses études, Manon a choisi de poursuivre l\'accompagnement de ses premiers clients. De projet en projet, cette continuité s\'est transformée en aventure entrepreneuriale : construire une identité forte, capable de refléter sa façon de travailler et sa vision de la communication.</p>'+
+        '<p style="margin-top:12px;color:var(--ink-soft);">L\'agence Atlas est née de cette volonté : proposer une communication créative, humaine et pensée dans sa globalité, du community management à la formation.</p>'+
+        '<p style="margin-top:16px;font-family:\'Fraunces\',serif;font-weight:600;font-style:italic;color:var(--orange-dark);font-size:1.1rem;">« Faire émerger les idées et les faire rayonner. »</p>'+
+      '</div>'+
+      '<div class="card" style="background:var(--cream);border:none;">'+
+        '<div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">'+
+          '<div style="width:60px;height:60px;border-radius:50%;background:var(--orange);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--white);font-family:\'Fraunces\',serif;font-weight:700;font-size:1.3rem;">MB</div>'+
+          '<div><strong style="display:block;font-size:1.05rem;">Manon Bregnon</strong><span style="color:var(--ink-faint);font-size:.88rem;">Fondatrice, Atlas Communication 360°</span></div>'+
+        '</div>'+
+        '<ul style="margin:0;padding-left:18px;color:var(--ink-soft);font-size:.95rem;line-height:1.9;">'+
+          '<li>Community management</li><li>Création de contenu</li><li>Stratégie de développement commercial</li><li>Événementiel</li><li>Formation</li>'+
+        '</ul>'+
+      '</div>'+
+    '</div>'+
+  '</div></section>'+
+  '<section class="section-plum">'+
+    waveSVG("wave-cream-to-plum")+
+    '<div class="wrap">'+
+      '<div class="section-head"><span class="eyebrow" style="color:var(--yellow);">Personnalité de marque</span><h2>Une identité solaire, pensée jusque dans le détail</h2></div>'+
+      '<div class="grid grid-3">'+cards+'</div>'+
+    '</div>'+
+  '</section>'+
+  '<div style="background:var(--plum);">'+waveSVG("wave-plum-to-cream")+'</div>';
+}
+
+function servicesHTML(){
+  var services = [
+    {icon:"people", title:"Community management", text:"Calendrier éditorial, création de visuels et animation des communautés, pour une marque proche de son audience au quotidien."},
+    {icon:"pencil", title:"Création de contenu", text:"Rédaction, visuels et vidéo courte : du contenu pensé pour raconter une histoire de marque forte et cohérente."},
+    {icon:"compass", title:"Stratégie de développement commercial", text:"Un accompagnement structurant pour transformer une ambition commerciale en plan d'action concret et mesurable."},
+    {icon:"plane", title:"Événementiel", text:"De l'inauguration au salon professionnel : conception et coordination d'événements qui rassemblent vos publics."},
+    {icon:"cap", title:"Formation", text:"Des sessions sur mesure pour transmettre les bons réflexes de communication et rendre vos équipes autonomes."}
+  ];
+  var cards = services.map(function(s){
+    return '<div class="card service-card"><div class="service-icon">'+icon(s.icon)+'</div><h3>'+s.title+'</h3><p>'+s.text+'</p></div>';
+  }).join("");
+  return ''+
+  '<section><div class="wrap">'+
+    '<div class="section-head"><span class="eyebrow">Ce que nous faisons</span><h2>Une communication pensée à 360°</h2><p>Plutôt que de cloisonner les expertises, Atlas les rassemble pour construire des projets cohérents, de l\'idée à sa concrétisation.</p></div>'+
+    '<div class="grid grid-3">'+cards+'</div>'+
+    '<div class="value-row" style="margin-top:36px;">'+
+      ['sun','people','compass','check'].map(function(ic,i){
+        var labels=['Curiosité','Proximité','Stratégie','Vision globale'];
+        return '<span class="value-pill"><span class="dot">'+icon(ic)+'</span>'+labels[i]+'</span>';
+      }).join('')+
+    '</div>'+
+  '</div></section>';
+}
+
+function caseCardHTML(item){
+  return ''+
+  '<div class="case-card" data-id="'+item.id+'">'+
+    '<div class="case-visual" style="background:'+item.color+';">'+esc(item.title)+'</div>'+
+    '<div class="case-body">'+
+      '<span class="case-cat">'+esc(item.category)+'</span>'+
+      '<h3>'+esc(item.title)+'</h3>'+
+      '<p>'+esc(item.description)+'</p>'+
+      '<div class="case-actions admin-only" hidden>'+
+        '<button class="btn btn-ghost btn-sm" data-action="edit-portfolio" data-id="'+item.id+'">'+icon("edit")+' Modifier</button>'+
+        '<button class="btn btn-danger btn-sm" data-action="delete-portfolio" data-id="'+item.id+'">'+icon("trash")+'</button>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+}
+
+function realisationsHTML(){
+  var grid = state.portfolio.length
+    ? state.portfolio.map(caseCardHTML).join("")
+    : '<p class="empty-note">Aucune réalisation pour le moment.</p>';
+  return ''+
+  '<section><div class="wrap">'+
+    '<div class="section-head"><span class="eyebrow">Réalisations</span><h2>Quelques projets menés avec nos clients</h2><p>Un aperçu des univers accompagnés par l\'agence, du vignoble familial au salon professionnel.</p></div>'+
+    '<div class="section-toolbar admin-only" hidden><button class="btn btn-primary btn-sm" data-action="add-portfolio">'+icon("plus")+' Ajouter une réalisation</button></div>'+
+    '<div class="grid grid-3" id="portfolio-grid">'+grid+'</div>'+
+  '</div></section>';
+}
+
+function postCardHTML(post){
+  return ''+
+  '<article class="post-card" data-id="'+post.id+'">'+
+    '<div class="post-meta"><span>'+esc(fmtDate(post.date))+'</span></div>'+
+    '<h3>'+esc(post.title)+'</h3>'+
+    '<p class="post-excerpt">'+esc(post.excerpt)+'</p>'+
+    '<p class="post-body" hidden>'+esc(post.body)+'</p>'+
+    '<div class="post-actions">'+
+      '<button class="btn btn-ghost btn-sm" data-action="toggle-post" data-id="'+post.id+'">Lire la suite</button>'+
+      '<span class="admin-only post-actions-admin" hidden>'+
+        '<button class="btn btn-ghost btn-sm" data-action="edit-post" data-id="'+post.id+'">'+icon("edit")+' Modifier</button>'+
+        '<button class="btn btn-danger btn-sm" data-action="delete-post" data-id="'+post.id+'">'+icon("trash")+'</button>'+
+      '</span>'+
+    '</div>'+
+  '</article>';
+}
+
+function actusHTML(){
+  var sorted = state.posts.slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; });
+  var list = sorted.length
+    ? sorted.map(postCardHTML).join("")
+    : '<p class="empty-note">Aucune actualité pour le moment.</p>';
+  return ''+
+  '<section class="section-orange">'+waveSVG("wave-cream-to-orange")+
+    '<div class="wrap">'+
+      '<div class="section-head"><span class="eyebrow" style="color:var(--plum);">Actualités</span><h2>Les nouvelles de l\'agence</h2><p>Conseils, coulisses et actualités d\'Atlas Communication 360°.</p></div>'+
+      '<div class="section-toolbar admin-only" hidden><button class="btn btn-light btn-sm" data-action="add-post">'+icon("plus")+' Ajouter une actualité</button></div>'+
+      '<div class="post-list" id="posts-list">'+list+'</div>'+
+    '</div>'+
+  '</section>'+
+  '<div style="background:var(--cream);">'+waveSVG("wave-orange-to-cream", true)+'</div>';
+}
+
+function contactHTML(){
+  return ''+
+  '<section><div class="wrap">'+
+    '<div class="section-head"><span class="eyebrow">Contact</span><h2>Parlons de votre prochain projet</h2><p>Un mail, un message ou un appel : Manon revient vers vous rapidement pour échanger sur vos besoins.</p></div>'+
+    '<div class="contact-grid">'+
+      '<div class="contact-card"><div class="service-icon">'+icon("mail")+'</div><div><h3>Email</h3><div class="copy-row"><span class="copy-value" id="cv-mail">contact@atlas-communication-360.com</span><button class="btn btn-ghost btn-sm" data-copy="cv-mail">'+icon("copy")+'</button></div></div></div>'+
+      '<div class="contact-card"><div class="service-icon">'+icon("phone")+'</div><div><h3>Téléphone</h3><div class="copy-row"><span class="copy-value" id="cv-phone">06 02 26 39 76</span><button class="btn btn-ghost btn-sm" data-copy="cv-phone">'+icon("copy")+'</button></div></div></div>'+
+      '<div class="contact-card"><div class="service-icon">'+icon("insta")+'</div><div><h3>Instagram</h3><div class="copy-row"><a class="copy-value" href="https://instagram.com/Atlas_Communication_360" target="_blank" rel="noopener">@Atlas_Communication_360</a></div></div></div>'+
+      '<div class="contact-card"><div class="service-icon">'+icon("compass")+'</div><div><h3>Zone d\'intervention</h3><p style="color:var(--ink-soft);margin-top:4px;">Projets locaux et à distance, en France.</p></div></div>'+
+    '</div>'+
+  '</div></section>';
+}
+
+function footerHTML(){
+  var links = NAV_ITEMS.map(function(it){ return '<a href="#'+it.hash+'" data-hash="'+it.hash+'">'+it.label+'</a>'; }).join("");
+  return ''+
+  '<footer><div class="wrap footer-grid">'+
+    '<div><span class="brand-name" style="color:var(--cream);">Atlas</span><span class="brand-tag" style="color:var(--yellow);">Communication 360°</span>'+
+      '<p style="margin-top:14px;max-width:32ch;color:rgba(255,250,235,.72);font-size:.92rem;">Faire émerger les idées et les faire rayonner.</p></div>'+
+    '<div><h4>Navigation</h4>'+links+'</div>'+
+    '<div><h4>Contact</h4><a href="#contact" data-hash="contact">contact@atlas-communication-360.com</a><a href="#contact" data-hash="contact">06 02 26 39 76</a><a href="https://instagram.com/Atlas_Communication_360" target="_blank" rel="noopener">@Atlas_Communication_360</a></div>'+
+  '</div>'+
+  '<div class="wrap footer-bottom"><span>© '+new Date().getFullYear()+' Atlas Communication 360°</span><span>Site vitrine avec espace de contenu intégré</span></div>'+
+  '</footer>';
+}
+
+function pageWrap(id, inner){
+  return '<section id="page-'+id+'" class="page">'+inner+'</section>';
+}
+
+function appHTML(){
+  return ''+
+    navHTML()+
+    '<main>'+
+      pageWrap("accueil", heroHTML()+servicesPreviewDivider())+
+      pageWrap("agence", agenceHTML())+
+      pageWrap("services", servicesHTML())+
+      pageWrap("realisations", realisationsHTML())+
+      pageWrap("actus", actusHTML())+
+      pageWrap("contact", contactHTML())+
+    '</main>'+
+    footerHTML()+
+    '<div id="admin-bar" class="admin-only" hidden><span class="dot"></span> Mode édition actif <button class="btn btn-light btn-sm" data-action="admin-help">?</button></div>'+
+    '<div id="toast"></div>';
+}
+function servicesPreviewDivider(){ return ""; }
+
+/* ---------- render / router ---------- */
+var appRoot = document.getElementById("app");
+
+function paint(){
+  appRoot.innerHTML = appHTML();
+  if(canEdit){
+    appRoot.querySelectorAll(".admin-only").forEach(function(el){ el.hidden = false; });
+  }
+  bindEvents();
+  applyRoute();
+}
+
+function applyRoute(){
+  var hash = (location.hash||"#accueil").replace("#","");
+  var valid = NAV_ITEMS.some(function(i){return i.hash===hash;});
+  if(!valid) hash = "accueil";
+  document.querySelectorAll(".page").forEach(function(p){
+    p.classList.toggle("active", p.id === "page-"+hash);
+  });
+  document.querySelectorAll("[data-hash]").forEach(function(a){
+    a.classList.toggle("active", a.getAttribute("data-hash") === hash);
+  });
+  var navLinks = document.getElementById("nav-links");
+  if(navLinks) navLinks.classList.remove("open");
+  var toggle = document.getElementById("nav-toggle");
+  if(toggle) toggle.setAttribute("aria-expanded","false");
+  window.scrollTo({top:0, behavior:"auto"});
+}
+
+window.addEventListener("hashchange", applyRoute);
+
+/* ---------- toast ---------- */
+var toastTimer = null;
+function showToast(msg){
+  var t = document.getElementById("toast");
+  if(!t) return;
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 3200);
+}
+
+/* ---------- modal ---------- */
+function openModal(title, fields, onSave, onDeleteLabel, onDelete){
+  var backdrop = document.createElement("div");
+  backdrop.className = "modal-backdrop";
+  var fieldsHTML = fields.map(function(f){
+    var tag = f.type === "textarea" ? "textarea" : "input";
+    var attrs = f.type && f.type !== "textarea" ? ' type="'+f.type+'"' : "";
+    var valueAttr = tag === "input" ? ' value="'+esc(f.value||"")+'"' : "";
+    var content = tag === "textarea" ? esc(f.value||"") : "";
+    return '<div class="field"><label for="fld-'+f.key+'">'+f.label+'</label><'+tag+' id="fld-'+f.key+'"'+attrs+valueAttr+'>'+content+'</'+tag+'></div>';
+  }).join("");
+  backdrop.innerHTML =
+    '<div class="modal">'+
+      '<h3>'+title+'</h3>'+
+      '<form id="modal-form">'+fieldsHTML+
+        '<div class="modal-actions">'+
+          (onDelete ? '<button type="button" class="btn btn-danger btn-sm" id="modal-delete" style="margin-right:auto;">'+(onDeleteLabel||"Supprimer")+'</button>' : "")+
+          '<button type="button" class="btn btn-ghost btn-sm" id="modal-cancel">Annuler</button>'+
+          '<button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>'+
+        '</div>'+
+      '</form>'+
+    '</div>';
+  document.body.appendChild(backdrop);
+  backdrop.addEventListener("click", function(e){ if(e.target === backdrop) close(); });
+  function close(){ backdrop.remove(); }
+  backdrop.querySelector("#modal-cancel").addEventListener("click", close);
+  if(onDelete){
+    backdrop.querySelector("#modal-delete").addEventListener("click", function(){ close(); onDelete(); });
+  }
+  backdrop.querySelector("#modal-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    var values = {};
+    fields.forEach(function(f){ values[f.key] = backdrop.querySelector("#fld-"+f.key).value.trim(); });
+    close();
+    onSave(values);
+  });
+  var firstInput = backdrop.querySelector("input,textarea");
+  if(firstInput) firstInput.focus();
+}
+
+function confirmDialog(message, confirmLabel, onConfirm){
+  var backdrop = document.createElement("div");
+  backdrop.className = "modal-backdrop";
+  backdrop.innerHTML =
+    '<div class="modal">'+
+      '<h3>'+message+'</h3>'+
+      '<div class="modal-actions">'+
+        '<button type="button" class="btn btn-ghost btn-sm" id="confirm-cancel">Annuler</button>'+
+        '<button type="button" class="btn btn-danger btn-sm" id="confirm-ok">'+confirmLabel+'</button>'+
+      '</div>'+
+    '</div>';
+  document.body.appendChild(backdrop);
+  function close(){ backdrop.remove(); }
+  backdrop.addEventListener("click", function(e){ if(e.target === backdrop) close(); });
+  backdrop.querySelector("#confirm-cancel").addEventListener("click", close);
+  backdrop.querySelector("#confirm-ok").addEventListener("click", function(){ close(); onConfirm(); });
+}
+
+/* ---------- publish ---------- */
+var CSS_TEXT_SOURCE = document.getElementById("app-style") ? document.getElementById("app-style").textContent : "";
+var FONT_LINKS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;0,900;1,600&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">';
+
+function buildFullDocument(newState){
+  var dataJSON = JSON.stringify(newState).replace(/</g, "\\u003c");
+  var head =
+    '<head><meta charset="utf-8">'+
+    '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'+
+    '<title>Atlas Communication 360°</title>'+
+    FONT_LINKS+
+    '<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}'+CSS_TEXT_SOURCE+'</style>'+
+    '</head>';
+  var body =
+    '<body>'+
+      '<div id="app"></div>'+
+      '<script type="application/json" id="site-data">'+dataJSON+'<\/script>'+
+      document.getElementById("app-script").outerHTML+
+    '</body>';
+  return '<!doctype html><html lang="fr">'+head+body+'</html>';
+}
+
+function persist(newState, successMsg){
+  state = newState;
+  paint();
+  if(!artifactCap){ showToast("Aperçu local uniquement : publiez la page pour activer l'édition."); return; }
+  artifactCap.publish(buildFullDocument(newState)).then(function(){
+    showToast(successMsg || "Modifications publiées.");
+  }).catch(function(err){
+    var code = err && err.code;
+    if(code === "conflict"){ showToast("Une autre modification vient d'être publiée, la page va se recharger."); return; }
+    if(code === "not_writer" || code === "not_granted"){ showToast("Vous n'avez pas les droits pour publier ces modifications."); return; }
+    showToast("La publication a échoué (" + (code||"erreur") + "). Réessayez.");
+  });
+}
+
+/* ---------- admin actions ---------- */
+function addPortfolio(){
+  openModal("Nouvelle réalisation", [
+    {key:"title", label:"Nom du client / projet", value:""},
+    {key:"category", label:"Catégorie", value:""},
+    {key:"description", label:"Description", type:"textarea", value:""}
+  ], function(v){
+    if(!v.title) return;
+    var next = JSON.parse(JSON.stringify(state));
+    var colors = ["var(--orange)","var(--plum)","var(--orange-dark)","var(--plum-soft)"];
+    next.portfolio.push({id:uid("p"), title:v.title, category:v.category||"Projet", description:v.description||"", color:colors[next.portfolio.length % colors.length]});
+    persist(next, "Réalisation ajoutée.");
+  });
+}
+function editPortfolio(id){
+  var item = state.portfolio.find(function(p){return p.id===id;});
+  if(!item) return;
+  openModal("Modifier la réalisation", [
+    {key:"title", label:"Nom du client / projet", value:item.title},
+    {key:"category", label:"Catégorie", value:item.category},
+    {key:"description", label:"Description", type:"textarea", value:item.description}
+  ], function(v){
+    var next = JSON.parse(JSON.stringify(state));
+    var it = next.portfolio.find(function(p){return p.id===id;});
+    it.title = v.title||it.title; it.category = v.category||it.category; it.description = v.description||it.description;
+    persist(next, "Réalisation modifiée.");
+  }, "Supprimer", function(){ deletePortfolio(id); });
+}
+function deletePortfolio(id){
+  var next = JSON.parse(JSON.stringify(state));
+  next.portfolio = next.portfolio.filter(function(p){return p.id!==id;});
+  persist(next, "Réalisation supprimée.");
+}
+function addPost(){
+  var today = new Date().toISOString().slice(0,10);
+  openModal("Nouvelle actualité", [
+    {key:"title", label:"Titre", value:""},
+    {key:"date", label:"Date (AAAA-MM-JJ)", value:today},
+    {key:"excerpt", label:"Résumé court", type:"textarea", value:""},
+    {key:"body", label:"Texte complet", type:"textarea", value:""}
+  ], function(v){
+    if(!v.title) return;
+    var next = JSON.parse(JSON.stringify(state));
+    next.posts.push({id:uid("n"), title:v.title, date:v.date||today, excerpt:v.excerpt||"", body:v.body||v.excerpt||""});
+    persist(next, "Actualité publiée.");
+  });
+}
+function editPost(id){
+  var item = state.posts.find(function(p){return p.id===id;});
+  if(!item) return;
+  openModal("Modifier l'actualité", [
+    {key:"title", label:"Titre", value:item.title},
+    {key:"date", label:"Date (AAAA-MM-JJ)", value:item.date},
+    {key:"excerpt", label:"Résumé court", type:"textarea", value:item.excerpt},
+    {key:"body", label:"Texte complet", type:"textarea", value:item.body}
+  ], function(v){
+    var next = JSON.parse(JSON.stringify(state));
+    var it = next.posts.find(function(p){return p.id===id;});
+    it.title=v.title||it.title; it.date=v.date||it.date; it.excerpt=v.excerpt||it.excerpt; it.body=v.body||it.body;
+    persist(next, "Actualité modifiée.");
+  }, "Supprimer", function(){ deletePost(id); });
+}
+function deletePost(id){
+  var next = JSON.parse(JSON.stringify(state));
+  next.posts = next.posts.filter(function(p){return p.id!==id;});
+  persist(next, "Actualité supprimée.");
+}
+
+/* ---------- events ---------- */
+function bindEvents(){
+  var toggle = document.getElementById("nav-toggle");
+  var navLinks = document.getElementById("nav-links");
+  if(toggle && navLinks){
+    toggle.addEventListener("click", function(){
+      var open = navLinks.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open ? "true":"false");
+      toggle.innerHTML = open ? icon("close") : icon("menu");
+    });
+  }
+
+  appRoot.querySelectorAll("[data-copy]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var val = document.getElementById(btn.getAttribute("data-copy")).textContent;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(val).then(function(){ showToast("Copié : "+val); }).catch(function(){ showToast(val); });
+      } else { showToast(val); }
+    });
+  });
+
+  appRoot.querySelectorAll('[data-action="toggle-post"]').forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var card = btn.closest(".post-card");
+      var body = card.querySelector(".post-body");
+      var willShow = body.hasAttribute("hidden");
+      body.toggleAttribute("hidden");
+      btn.textContent = willShow ? "Réduire" : "Lire la suite";
+    });
+  });
+
+  var addPortfolioBtn = appRoot.querySelector('[data-action="add-portfolio"]');
+  if(addPortfolioBtn) addPortfolioBtn.addEventListener("click", addPortfolio);
+  var addPostBtn = appRoot.querySelector('[data-action="add-post"]');
+  if(addPostBtn) addPostBtn.addEventListener("click", addPost);
+
+  appRoot.querySelectorAll('[data-action="edit-portfolio"]').forEach(function(b){
+    b.addEventListener("click", function(){ editPortfolio(b.getAttribute("data-id")); });
+  });
+  appRoot.querySelectorAll('[data-action="delete-portfolio"]').forEach(function(b){
+    b.addEventListener("click", function(){ deletePortfolioConfirm(b.getAttribute("data-id")); });
+  });
+  appRoot.querySelectorAll('[data-action="edit-post"]').forEach(function(b){
+    b.addEventListener("click", function(){ editPost(b.getAttribute("data-id")); });
+  });
+  appRoot.querySelectorAll('[data-action="delete-post"]').forEach(function(b){
+    b.addEventListener("click", function(){ deletePostConfirm(b.getAttribute("data-id")); });
+  });
+
+  var helpBtn = appRoot.querySelector('[data-action="admin-help"]');
+  if(helpBtn) helpBtn.addEventListener("click", function(){
+    showToast("Vous voyez ce panneau car vous pouvez modifier cette page. Ajoutez ou éditez du contenu dans Réalisations et Actualités.");
+  });
+}
+
+function deletePortfolioConfirm(id){
+  var item = state.portfolio.find(function(p){return p.id===id;});
+  if(!item) return;
+  confirmDialog("Supprimer « "+esc(item.title)+" » ?", "Supprimer", function(){ deletePortfolio(id); });
+}
+function deletePostConfirm(id){
+  var item = state.posts.find(function(p){return p.id===id;});
+  if(!item) return;
+  confirmDialog("Supprimer « "+esc(item.title)+" » ?", "Supprimer", function(){ deletePost(id); });
+}
+
+/* ---------- boot ---------- */
+paint();
+
+function initCapabilities(){
+  if(!window.claude || !window.claude.use){ return; }
+  Promise.all([
+    window.claude.use("artifact").catch(function(){return null;}),
+    window.claude.use("user").catch(function(){return null;})
+  ]).then(function(res){
+    artifactCap = res[0];
+    var userCap = res[1];
+    if(!userCap || !artifactCap){ canEdit = false; paint(); return; }
+    return userCap.canEdit().then(function(v){
+      canEdit = !!v;
+      paint();
+    });
+  }).catch(function(){ canEdit = false; });
+}
+initCapabilities();
+
+})();
+</script>
