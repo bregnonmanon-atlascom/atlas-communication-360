@@ -32,6 +32,23 @@ actualité sur le site de production :
 2. Committer et pousser sur `main` — GitHub Pages republie automatiquement
    en 1 à 2 minutes.
 
+## SEO & responsive
+
+- `index.html` est un document HTML5 complet et valide (`<!doctype>`, `<html lang="fr">`,
+  `<head>` avec charset, viewport, meta description, balises Open Graph /
+  Twitter Card, lien canonique, et un bloc JSON-LD `Organization` pour les
+  moteurs de recherche).
+- `robots.txt` + `sitemap.xml` déclarent le site aux robots d'indexation.
+- `favicon.svg` / `favicon.ico` / `apple-touch-icon.png` / `icon-512.png` —
+  déclinaisons de l'icône de marque pour onglets, favoris et écran d'accueil
+  mobile.
+- `og-image.png` (1200×630) — visuel utilisé pour les aperçus de partage sur
+  les réseaux sociaux et la messagerie.
+- La mise en page est responsive : navigation qui se replie en menu mobile,
+  grilles qui passent de 3 à 2 puis 1 colonne selon la largeur d'écran, et un
+  point de rupture dédié aux petits téléphones (< 480px) pour resserrer les
+  espacements.
+
 ## Structure
 
 - `CNAME` — nom de domaine personnalisé pour GitHub Pages.
