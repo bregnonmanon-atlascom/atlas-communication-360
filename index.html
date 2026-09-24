@@ -238,7 +238,55 @@ section{padding-top:76px;padding-bottom:50px;}
 .case-cat{font-weight:800;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);}
 .case-body h3{font-size:1.08rem;}
 .case-body p{color:var(--ink-soft);font-size:.9rem;flex:1;}
-.case-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:6px;}
+.case-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:6px;flex-wrap:wrap;}
+.case-card-link{transition:transform .18s ease, box-shadow .18s ease;}
+.case-card-link:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.case-card-link .case-visual,.case-card-link h3 a{cursor:pointer;}
+.case-more{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:.82rem;color:var(--orange);margin-top:4px;}
+.case-more:hover{color:var(--plum);}
+
+/* page réalisation */
+.project-back{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.88rem;color:var(--plum-soft);margin-bottom:22px;}
+.project-back:hover{color:var(--orange);}
+.project-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px;}
+.project-head h1{font-size:clamp(2rem,4.4vw,3.2rem);color:var(--plum);margin-top:10px;}
+.project-lede{margin-top:14px;font-size:1.08rem;color:var(--ink-soft);max-width:60ch;}
+.project-facts{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px;}
+.project-fact{background:var(--white);border:1px solid var(--line);border-radius:100px;padding:8px 16px;font-size:.85rem;font-weight:700;color:var(--plum-soft);}
+.project-fact b{color:var(--orange);font-weight:800;margin-right:6px;text-transform:uppercase;font-size:.7rem;letter-spacing:.1em;}
+.carousel{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:var(--plum);box-shadow:var(--shadow);}
+.carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;}
+.carousel-track::-webkit-scrollbar{display:none;}
+.carousel-slide{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;}
+.carousel-slide img{width:100%;height:100%;object-fit:contain;}
+.carousel-btn{
+  position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+  background:var(--orange);color:var(--white);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 24px -10px rgba(0,0,0,.5);transition:background .15s ease;
+}
+.carousel-btn:hover{background:var(--yellow);color:var(--plum);}
+.carousel-btn:disabled{opacity:.35;cursor:default;}
+.carousel-prev{left:14px;}
+.carousel-next{right:14px;}
+.carousel-count{position:absolute;top:14px;right:14px;background:rgba(51,24,50,.8);color:var(--cream);border-radius:100px;padding:4px 12px;font-size:.78rem;font-weight:700;}
+.carousel-dots{display:flex;justify-content:center;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.carousel-dot{width:10px;height:10px;border-radius:50%;border:none;padding:0;background:var(--line);cursor:pointer;}
+.carousel-dot.active{background:var(--orange);width:26px;border-radius:100px;}
+@media (max-width:640px){.carousel-btn{width:38px;height:38px;}.carousel-slide{aspect-ratio:4/5;}}
+.project-body{display:grid;grid-template-columns:1.4fr .6fr;gap:40px;margin-top:44px;align-items:start;}
+@media (max-width:860px){.project-body{grid-template-columns:1fr;}}
+.project-details{white-space:pre-wrap;color:var(--ink-soft);font-size:1.02rem;}
+.project-cta{background:var(--orange);color:var(--white);border-radius:var(--radius-md);padding:26px;}
+.project-cta h3{font-size:1.25rem;}
+.project-cta p{margin:10px 0 18px;color:rgba(255,255,255,.88);font-size:.95rem;}
+.gallery-editor{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:10px;}
+.gallery-thumb{position:relative;aspect-ratio:1;border-radius:var(--radius-sm);overflow:hidden;background:var(--cream);border:1.5px solid var(--line);}
+.gallery-thumb img{width:100%;height:100%;object-fit:cover;}
+.gallery-thumb-tools{position:absolute;inset:auto 4px 4px 4px;display:flex;justify-content:space-between;gap:4px;}
+.gallery-thumb-tools button{border:none;border-radius:100px;background:rgba(51,24,50,.85);color:var(--cream);font-size:.72rem;font-weight:700;padding:3px 8px;cursor:pointer;}
+.gallery-thumb-tools button:disabled{opacity:.3;cursor:default;}
+.gallery-empty{grid-column:1/-1;color:var(--ink-faint);font-size:.85rem;padding:14px;border:1.5px dashed var(--line);border-radius:var(--radius-sm);text-align:center;}
+.field-hint{font-size:.78rem;color:var(--ink-faint);margin-top:4px;}
 
 /* posts */
 .post-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);padding:26px;}
@@ -392,7 +440,10 @@ function icon(name){
     plus:'<path d="M12 5v14M5 12h14"/>',
     edit:'<path d="M4 20l.6-3.2L15.8 5.6a1.4 1.4 0 0 1 2 0l.6.6a1.4 1.4 0 0 1 0 2L7.2 19.4 4 20z"/>',
     trash:'<path d="M5 7h14M9 7V5.4c0-.7.6-1.4 1.4-1.4h3.2c.8 0 1.4.7 1.4 1.4V7M7 7l.9 12c.05.9.8 1.6 1.7 1.6h4.8c.9 0 1.65-.7 1.7-1.6L17 7"/>',
-    copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>'
+    copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+    left:'<path d="M15 5l-7 7 7 7"/>',
+    right:'<path d="M9 5l7 7-7 7"/>',
+    page:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/>'
   }[name] || '';
   return '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+p+'</svg>';
 }
@@ -570,18 +621,26 @@ function servicesHTML(){
   '</div></section>';
 }
 
+function hasProjectPage(item){
+  return !!(item && ((item.gallery && item.gallery.length) || item.details));
+}
+function projectHash(item){ return "realisation-" + item.id; }
+
 function caseCardHTML(item){
+  var linked = hasProjectPage(item);
   var visual = item.image
     ? '<div class="case-visual case-visual-photo" style="background-image:url('+"'"+item.image+"'"+');" role="img" aria-label="'+esc(item.title)+'"></div>'
     : '<div class="case-visual" style="background:'+item.color+';">'+esc(item.title)+'</div>';
   return ''+
-  '<div class="case-card" data-id="'+item.id+'">'+
-    visual+
+  '<div class="case-card'+(linked?' case-card-link':'')+'" data-id="'+item.id+'">'+
+    (linked ? '<a href="#'+projectHash(item)+'" tabindex="-1" aria-hidden="true">'+visual+'</a>' : visual)+
     '<div class="case-body">'+
       '<span class="case-cat">'+esc(item.category)+'</span>'+
-      '<h3>'+esc(item.title)+'</h3>'+
+      '<h3>'+(linked ? '<a href="#'+projectHash(item)+'">'+esc(item.title)+'</a>' : esc(item.title))+'</h3>'+
       '<p>'+esc(item.description)+'</p>'+
+      (linked ? '<a class="case-more" href="#'+projectHash(item)+'">Voir le projet '+icon("right")+'</a>' : '')+
       '<div class="case-actions admin-only" hidden>'+
+        '<button class="btn btn-primary btn-sm" data-action="edit-project-page" data-id="'+item.id+'">'+icon("page")+(linked ? ' Modifier la page' : ' Créer la page')+'</button>'+
         '<button class="btn btn-ghost btn-sm" data-action="edit-portfolio" data-id="'+item.id+'">'+icon("edit")+' Modifier</button>'+
         '<button class="btn btn-danger btn-sm" data-action="delete-portfolio" data-id="'+item.id+'">'+icon("trash")+'</button>'+
       '</div>'+
@@ -616,6 +675,53 @@ function postCardHTML(post){
       '</span>'+
     '</div>'+
   '</article>';
+}
+
+function projectSlides(item){
+  var list = (item.gallery && item.gallery.length) ? item.gallery.slice() : [];
+  if(!list.length && item.image) list.push(item.image);
+  return list;
+}
+function carouselHTML(item){
+  var slides = projectSlides(item);
+  if(!slides.length) return '';
+  var many = slides.length > 1;
+  return ''+
+  '<div class="carousel" data-carousel aria-roledescription="carrousel" aria-label="Photos du projet '+esc(item.title)+'">'+
+    '<div class="carousel-track" tabindex="0">'+
+      slides.map(function(src, i){
+        return '<div class="carousel-slide" role="group" aria-roledescription="diapositive" aria-label="'+(i+1)+' sur '+slides.length+'"><img src="'+src+'" alt="'+esc(item.title)+' – photo '+(i+1)+'"'+(i>0?' loading="lazy"':'')+'></div>';
+      }).join("")+
+    '</div>'+
+    (many ?
+      '<button class="carousel-btn carousel-prev" type="button" aria-label="Photo précédente">'+icon("left")+'</button>'+
+      '<button class="carousel-btn carousel-next" type="button" aria-label="Photo suivante">'+icon("right")+'</button>'+
+      '<span class="carousel-count">1 / '+slides.length+'</span>' : '')+
+  '</div>'+
+  (many ? '<div class="carousel-dots">'+slides.map(function(_, i){
+    return '<button class="carousel-dot'+(i===0?' active':'')+'" type="button" data-slide="'+i+'" aria-label="Aller à la photo '+(i+1)+'"></button>';
+  }).join("")+'</div>' : '');
+}
+function projectPageHTML(item){
+  var facts = [];
+  if(item.client) facts.push(['Client', item.client]);
+  if(item.year) facts.push(['Année', item.year]);
+  if(item.missions) facts.push(['Missions', item.missions]);
+  return ''+
+  '<section><div class="wrap">'+
+    '<a class="project-back" href="#realisations" data-hash="realisations">'+icon("left")+' Toutes les réalisations</a>'+
+    '<div class="project-head">'+
+      '<div><span class="eyebrow">'+esc(item.category)+'</span><h1>'+esc(item.title)+'</h1>'+
+        (item.description ? '<p class="project-lede">'+esc(item.description)+'</p>' : '')+'</div>'+
+      '<div class="admin-only" hidden><button class="btn btn-primary btn-sm" data-action="edit-project-page" data-id="'+item.id+'">'+icon("edit")+' Modifier la page</button></div>'+
+    '</div>'+
+    (facts.length ? '<div class="project-facts">'+facts.map(function(f){ return '<span class="project-fact"><b>'+f[0]+'</b>'+esc(f[1])+'</span>'; }).join("")+'</div>' : '')+
+    carouselHTML(item)+
+    '<div class="project-body">'+
+      '<div class="project-details">'+(item.details ? esc(item.details) : '')+'</div>'+
+      '<aside class="project-cta"><h3>Un projet similaire ?</h3><p>Parlons de vos envies : Manon revient vers vous rapidement.</p><a class="btn btn-light btn-sm" href="#contact" data-hash="contact">Nous contacter</a></aside>'+
+    '</div>'+
+  '</div></section>';
 }
 
 function actusHTML(){
@@ -674,6 +780,7 @@ function appHTML(){
       pageWrap("agence", agenceHTML())+
       pageWrap("services", servicesHTML())+
       pageWrap("realisations", realisationsHTML())+
+      state.portfolio.filter(hasProjectPage).map(function(it){ return pageWrap(projectHash(it), projectPageHTML(it)); }).join("")+
       pageWrap("actus", actusHTML())+
       pageWrap("contact", contactHTML())+
     '</main>'+
@@ -697,13 +804,18 @@ function paint(){
 
 function applyRoute(){
   var hash = (location.hash||"#accueil").replace("#","");
-  var valid = NAV_ITEMS.some(function(i){return i.hash===hash;});
-  if(!valid) hash = "accueil";
+  var navHash = hash;
+  if(hash.indexOf("realisation-") === 0){
+    navHash = "realisations";
+    if(!document.getElementById("page-"+hash)) hash = navHash = "realisations";
+  }
+  var valid = NAV_ITEMS.some(function(i){return i.hash===navHash;});
+  if(!valid) hash = navHash = "accueil";
   document.querySelectorAll(".page").forEach(function(p){
     p.classList.toggle("active", p.id === "page-"+hash);
   });
   document.querySelectorAll("[data-hash]").forEach(function(a){
-    a.classList.toggle("active", a.getAttribute("data-hash") === hash);
+    a.classList.toggle("active", a.getAttribute("data-hash") === navHash);
   });
   var navLinks = document.getElementById("nav-links");
   if(navLinks) navLinks.classList.remove("open");
@@ -729,7 +841,17 @@ function showToast(msg){
 function openModal(title, fields, onSave, onDeleteLabel, onDelete){
   var backdrop = document.createElement("div");
   backdrop.className = "modal-backdrop";
+  var galleries = {};
   var fieldsHTML = fields.map(function(f){
+    if(f.type === "gallery"){
+      galleries[f.key] = (f.value || []).slice();
+      return '<div class="field field-gallery">'+
+        '<label>'+f.label+'</label>'+
+        '<div class="gallery-editor" id="gallery-'+f.key+'"></div>'+
+        '<input type="file" accept="image/*" multiple id="file-'+f.key+'">'+
+        '<p class="field-hint">Vous pouvez sélectionner plusieurs photos à la fois. Elles sont compressées automatiquement ; la première sert d\'ouverture au carrousel.</p>'+
+      '</div>';
+    }
     if(f.type === "image"){
       return '<div class="field field-image">'+
         '<label>'+f.label+'</label>'+
@@ -761,6 +883,47 @@ function openModal(title, fields, onSave, onDeleteLabel, onDelete){
   document.body.appendChild(backdrop);
   backdrop.addEventListener("click", function(e){ if(e.target === backdrop) close(); });
   function close(){ backdrop.remove(); }
+  function renderGallery(key){
+    var box = backdrop.querySelector("#gallery-"+key);
+    var list = galleries[key];
+    box.innerHTML = list.length ? list.map(function(src, i){
+      return '<div class="gallery-thumb"><img src="'+src+'" alt="Photo '+(i+1)+'">'+
+        '<div class="gallery-thumb-tools">'+
+          '<button type="button" data-move="'+i+'" aria-label="Avancer la photo"'+(i===0?' disabled':'')+'>&larr;</button>'+
+          '<button type="button" data-remove="'+i+'" aria-label="Retirer la photo">&times;</button>'+
+        '</div></div>';
+    }).join("") : '<div class="gallery-empty">Aucune photo pour le moment</div>';
+    box.querySelectorAll("[data-move]").forEach(function(b){
+      b.addEventListener("click", function(){
+        var i = +b.getAttribute("data-move");
+        if(i < 1) return;
+        var t = list[i-1]; list[i-1] = list[i]; list[i] = t;
+        renderGallery(key);
+      });
+    });
+    box.querySelectorAll("[data-remove]").forEach(function(b){
+      b.addEventListener("click", function(){
+        list.splice(+b.getAttribute("data-remove"), 1);
+        renderGallery(key);
+      });
+    });
+  }
+  Object.keys(galleries).forEach(function(key){
+    renderGallery(key);
+    var fileInput = backdrop.querySelector("#file-"+key);
+    fileInput.addEventListener("change", function(){
+      var files = Array.prototype.slice.call(fileInput.files || []);
+      fileInput.value = "";
+      Promise.all(files.map(function(file){
+        return resizeImageFile(file, 1400, 0.8).catch(function(){ return null; });
+      })).then(function(urls){
+        var failed = 0;
+        urls.forEach(function(u){ if(u) galleries[key].push(u); else failed++; });
+        renderGallery(key);
+        if(failed) showToast(failed+" photo(s) n'ont pas pu être chargées (format ou taille non pris en charge).");
+      });
+    });
+  });
   fields.forEach(function(f){
     if(f.type !== "image") return;
     var fileInput = backdrop.querySelector("#file-"+f.key);
@@ -788,7 +951,9 @@ function openModal(title, fields, onSave, onDeleteLabel, onDelete){
   backdrop.querySelector("#modal-form").addEventListener("submit", function(e){
     e.preventDefault();
     var values = {};
-    fields.forEach(function(f){ values[f.key] = backdrop.querySelector("#fld-"+f.key).value.trim(); });
+    fields.forEach(function(f){
+      values[f.key] = f.type === "gallery" ? galleries[f.key].slice() : backdrop.querySelector("#fld-"+f.key).value.trim();
+    });
     close();
     onSave(values);
   });
@@ -881,6 +1046,36 @@ function editPortfolio(id){
     persist(next, "Réalisation modifiée.");
   }, "Supprimer", function(){ deletePortfolio(id); });
 }
+function editProjectPage(id){
+  var item = state.portfolio.find(function(p){return p.id===id;});
+  if(!item) return;
+  var existed = hasProjectPage(item);
+  openModal((existed ? "Modifier la page : " : "Créer la page : ")+esc(item.title), [
+    {key:"gallery", label:"Photos du carrousel", type:"gallery", value:item.gallery||[]},
+    {key:"details", label:"Présentation détaillée du projet", type:"textarea", value:item.details||""},
+    {key:"client", label:"Client (optionnel)", value:item.client||""},
+    {key:"year", label:"Année (optionnel)", value:item.year||""},
+    {key:"missions", label:"Missions réalisées (optionnel, ex. : Réseaux sociaux, Brand book)", value:item.missions||""}
+  ], function(v){
+    var next = JSON.parse(JSON.stringify(state));
+    var it = next.portfolio.find(function(p){return p.id===id;});
+    it.gallery = v.gallery; it.details = v.details; it.client = v.client; it.year = v.year; it.missions = v.missions;
+    if(!hasProjectPage(it)){
+      persist(next, "Ajoutez au moins une photo ou un texte pour publier la page.");
+      return;
+    }
+    persist(next, existed ? "Page du projet mise à jour." : "Page du projet créée.");
+    location.hash = projectHash(it);
+  }, existed ? "Supprimer la page" : null, existed ? function(){
+    confirmDialog("Supprimer la page dédiée de « "+esc(item.title)+" » ? La carte reste visible dans Réalisations.", "Supprimer la page", function(){
+      var next = JSON.parse(JSON.stringify(state));
+      var it = next.portfolio.find(function(p){return p.id===id;});
+      delete it.gallery; delete it.details; delete it.client; delete it.year; delete it.missions;
+      if(location.hash === "#"+projectHash(it)) location.hash = "realisations";
+      persist(next, "Page du projet supprimée.");
+    });
+  } : null);
+}
 function deletePortfolio(id){
   var next = JSON.parse(JSON.stringify(state));
   next.portfolio = next.portfolio.filter(function(p){return p.id!==id;});
@@ -963,6 +1158,10 @@ function bindEvents(){
   appRoot.querySelectorAll('[data-action="delete-portfolio"]').forEach(function(b){
     b.addEventListener("click", function(){ deletePortfolioConfirm(b.getAttribute("data-id")); });
   });
+  appRoot.querySelectorAll('[data-action="edit-project-page"]').forEach(function(b){
+    b.addEventListener("click", function(){ editProjectPage(b.getAttribute("data-id")); });
+  });
+  appRoot.querySelectorAll("[data-carousel]").forEach(initCarousel);
   appRoot.querySelectorAll('[data-action="edit-post"]').forEach(function(b){
     b.addEventListener("click", function(){ editPost(b.getAttribute("data-id")); });
   });
@@ -974,6 +1173,41 @@ function bindEvents(){
   if(helpBtn) helpBtn.addEventListener("click", function(){
     showToast("Vous voyez ce panneau car vous pouvez modifier cette page. Ajoutez ou éditez du contenu dans Réalisations et Actualités.");
   });
+}
+
+function initCarousel(root){
+  var track = root.querySelector(".carousel-track");
+  var slides = track.children;
+  var prev = root.querySelector(".carousel-prev");
+  var next = root.querySelector(".carousel-next");
+  var count = root.querySelector(".carousel-count");
+  var dotsBox = root.nextElementSibling && root.nextElementSibling.classList.contains("carousel-dots") ? root.nextElementSibling : null;
+  var dots = dotsBox ? dotsBox.querySelectorAll(".carousel-dot") : [];
+  if(slides.length < 2) return;
+  function current(){ return Math.round(track.scrollLeft / Math.max(1, track.clientWidth)); }
+  function go(i){
+    i = Math.max(0, Math.min(slides.length-1, i));
+    track.scrollTo({left: i * track.clientWidth, behavior: "smooth"});
+  }
+  function sync(){
+    var i = current();
+    if(count) count.textContent = (i+1)+" / "+slides.length;
+    prev.disabled = i === 0;
+    next.disabled = i === slides.length-1;
+    for(var k=0;k<dots.length;k++) dots[k].classList.toggle("active", k === i);
+  }
+  prev.addEventListener("click", function(){ go(current()-1); });
+  next.addEventListener("click", function(){ go(current()+1); });
+  for(var k=0;k<dots.length;k++) (function(b){
+    b.addEventListener("click", function(){ go(+b.getAttribute("data-slide")); });
+  })(dots[k]);
+  track.addEventListener("keydown", function(e){
+    if(e.key === "ArrowLeft"){ e.preventDefault(); go(current()-1); }
+    if(e.key === "ArrowRight"){ e.preventDefault(); go(current()+1); }
+  });
+  var t = null;
+  track.addEventListener("scroll", function(){ clearTimeout(t); t = setTimeout(sync, 60); });
+  sync();
 }
 
 function deletePortfolioConfirm(id){
