@@ -7,29 +7,46 @@ Fraunces + Montserrat).
 
 ## Hébergement
 
-Le site est **hébergé et édité en direct** en tant qu'Artifact Claude :
+Le site de production est servi par **GitHub Pages**, depuis ce dépôt, sur
+le nom de domaine personnalisé :
+
+**https://atlas-communication-360.com**
+
+(configuration : fichier `CNAME` à la racine + DNS chez le registrar pointant
+vers GitHub Pages — voir Settings → Pages du dépôt).
+
+Une version jumelle, éditable en direct depuis le navigateur, reste
+disponible en tant qu'Artifact Claude :
 
 **https://claude.ai/artifact/FMZpMnaWCjqXKQLwjYyN3L**
 
-Ce dépôt Git ne sert pas à l'hébergement du site : c'est une copie de
-sauvegarde et de versioning du code source (`index.html`, fichier unique,
-sans dépendance de build). Pour toute modification, éditer ce fichier et le
-republier sur claude.ai (ou demander à Claude de le faire), puis pousser la
-même version ici pour garder l'historique à jour.
+### Ajouter du contenu (réalisations, actualités)
+
+Sur GitHub Pages, la page est **statique** : le panneau d'administration en
+direct (qui republie la page depuis le navigateur) ne fonctionne que dans
+l'Artifact Claude, pas ici. Pour ajouter ou modifier une réalisation ou une
+actualité sur le site de production :
+
+1. Éditer le tableau `SEED_DATA` (`portfolio` / `posts`) dans `index.html`
+   (ou demander à Claude de le faire).
+2. Committer et pousser sur `main` — GitHub Pages republie automatiquement
+   en 1 à 2 minutes.
 
 ## Structure
 
+- `CNAME` — nom de domaine personnalisé pour GitHub Pages.
+- `.nojekyll` — désactive le traitement Jekyll (page statique pure).
 - `index.html` — page unique contenant :
   - la navigation multi-pages (Accueil, L'agence, Services, Réalisations,
     Actualités, Contact) via un routeur par ancre (`#hash`) ;
   - tout le CSS et le JavaScript de la page ;
-  - un espace d'administration intégré : toute personne connectée sur
-    claude.ai avec les droits d'édition sur l'Artifact voit un mode édition
-    lui permettant d'ajouter, modifier ou supprimer des **réalisations** et
-    des **actualités** directement depuis la page. Chaque sauvegarde republie
-    le site pour tous les visiteurs.
-  - Les visiteurs normaux (sans droits d'édition) ne voient jamais ces
-    contrôles : ils naviguent en lecture seule.
+  - un espace d'administration intégré, actif uniquement sur l'Artifact
+    Claude : toute personne connectée sur claude.ai avec les droits
+    d'édition voit un mode édition lui permettant d'ajouter, modifier ou
+    supprimer des **réalisations** et des **actualités** directement depuis
+    la page. Sur GitHub Pages, ce panneau reste invisible pour tout le
+    monde (comportement normal, pas un bug) : les visiteurs naviguent en
+    lecture seule.
 
 ## Contact
 
