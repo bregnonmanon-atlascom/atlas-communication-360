@@ -137,9 +137,10 @@ p{margin:0;}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--plum);}
 @media (max-width:860px){
   .nav-links{
-    position:fixed;inset:calc(env(safe-area-inset-top,0px) + 68px) 0 0 0;background:var(--cream);flex-direction:column;align-items:stretch;
+    position:absolute;top:100%;left:0;right:0;background:var(--cream);flex-direction:column;align-items:stretch;
     padding:12px 24px 28px;gap:4px;transform:translateY(-8px);opacity:0;pointer-events:none;transition:opacity .18s ease, transform .18s ease;
-    border-top:1px solid var(--line);overflow-y:auto;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:0 18px 32px -20px rgba(51,24,50,.35);
+    max-height:80dvh;overflow-y:auto;
   }
   .nav-links.open{opacity:1;transform:translateY(0);pointer-events:auto;}
   .nav-links a{padding:14px 10px;font-size:1.05rem;text-align:left;}
@@ -158,20 +159,18 @@ p{margin:0;}
 .wave{display:block;width:100%;height:44px;position:relative;top:1px;}
 .wave-cream-to-plum{color:var(--cream);}
 .wave-plum-to-cream{color:var(--cream);}
-.wave-cream-to-orange{color:var(--cream);}
-.wave-orange-to-cream{color:var(--orange);}
+.wave-accent{color:var(--orange);margin-block:8px 32px;}
 
 /* ---------- Sections ---------- */
 .page{display:none;}
 .page.active{display:block;}
 section{padding-block:76px;}
 .section-plum{background:var(--plum);color:var(--cream);}
-.section-orange{background:var(--orange);color:var(--white);}
 .section-tight{padding-block:56px;}
 .section-head{max-width:640px;margin-bottom:44px;}
 .section-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);margin-top:10px;}
 .section-head p{margin-top:14px;color:var(--ink-soft);font-size:1.02rem;}
-.section-plum .section-head p,.section-orange .section-head p{color:rgba(255,255,255,.82);}
+.section-plum .section-head p{color:rgba(255,255,255,.82);}
 
 /* ---------- Hero ---------- */
 .hero{padding-block:64px 40px;position:relative;}
@@ -243,6 +242,7 @@ section{padding-block:76px;}
   min-height:140px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;
   font-weight:700;font-size:clamp(1.05rem,4vw,1.5rem);line-height:1.25;color:var(--white);text-align:center;padding:18px;
 }
+.case-visual-photo{background-size:cover;background-position:center;}
 .case-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1;}
 .case-cat{font-weight:800;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-dark);}
 .case-body h3{font-size:1.08rem;}
@@ -309,6 +309,14 @@ footer a:hover{color:var(--yellow);}
 }
 .field textarea{resize:vertical;min-height:90px;}
 .field input:focus,.field textarea:focus{outline:2px solid var(--orange);outline-offset:1px;}
+.field-image .image-preview{
+  width:100%;aspect-ratio:16/10;border-radius:var(--radius-sm);background:var(--cream);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:10px;
+  border:1.5px dashed var(--line);
+}
+.field-image .image-preview img{width:100%;height:100%;object-fit:cover;}
+.image-preview-empty{color:var(--ink-faint);font-size:.85rem;}
+.field-image input[type="file"]{width:100%;font-size:.85rem;margin-bottom:8px;}
 .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:8px;flex-wrap:wrap;}
 
 /* toast */
@@ -391,6 +399,32 @@ function fmtDate(iso){
   }catch(e){ return iso; }
 }
 function uid(prefix){ return prefix + "_" + Math.random().toString(36).slice(2,9); }
+
+function resizeImageFile(file, maxDim, quality){
+  return new Promise(function(resolve, reject){
+    if(!file.type || file.type.indexOf("image/") !== 0){ reject(new Error("not an image")); return; }
+    if(file.size > 15 * 1024 * 1024){ reject(new Error("too large")); return; }
+    var reader = new FileReader();
+    reader.onerror = function(){ reject(new Error("read failed")); };
+    reader.onload = function(){
+      var img = new Image();
+      img.onerror = function(){ reject(new Error("decode failed")); };
+      img.onload = function(){
+        var w = img.naturalWidth, h = img.naturalHeight;
+        var scale = Math.min(1, maxDim / Math.max(w, h));
+        var cw = Math.max(1, Math.round(w * scale));
+        var ch = Math.max(1, Math.round(h * scale));
+        var canvas = document.createElement("canvas");
+        canvas.width = cw; canvas.height = ch;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, cw, ch);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 /* ---------- state ---------- */
 var state = null;
@@ -530,9 +564,12 @@ function servicesHTML(){
 }
 
 function caseCardHTML(item){
+  var visual = item.image
+    ? '<div class="case-visual case-visual-photo" style="background-image:url('+"'"+item.image+"'"+');" role="img" aria-label="'+esc(item.title)+'"></div>'
+    : '<div class="case-visual" style="background:'+item.color+';">'+esc(item.title)+'</div>';
   return ''+
   '<div class="case-card" data-id="'+item.id+'">'+
-    '<div class="case-visual" style="background:'+item.color+';">'+esc(item.title)+'</div>'+
+    visual+
     '<div class="case-body">'+
       '<span class="case-cat">'+esc(item.category)+'</span>'+
       '<h3>'+esc(item.title)+'</h3>'+
@@ -580,14 +617,15 @@ function actusHTML(){
     ? sorted.map(postCardHTML).join("")
     : '<p class="empty-note">Aucune actualité pour le moment.</p>';
   return ''+
-  '<section class="section-orange">'+waveSVG("wave-cream-to-orange")+
+  '<section><div class="wrap">'+
+      '<div class="section-head"><span class="eyebrow">Actualités</span><h2>Les nouvelles de l\'agence</h2><p>Conseils, coulisses et actualités d\'Atlas Communication 360°.</p></div>'+
+    '</div>'+
+    waveSVG("wave-accent")+
     '<div class="wrap">'+
-      '<div class="section-head"><span class="eyebrow" style="color:var(--plum);">Actualités</span><h2>Les nouvelles de l\'agence</h2><p>Conseils, coulisses et actualités d\'Atlas Communication 360°.</p></div>'+
-      '<div class="section-toolbar admin-only" hidden><button class="btn btn-light btn-sm" data-action="add-post">'+icon("plus")+' Ajouter une actualité</button></div>'+
+      '<div class="section-toolbar admin-only" hidden><button class="btn btn-primary btn-sm" data-action="add-post">'+icon("plus")+' Ajouter une actualité</button></div>'+
       '<div class="post-list" id="posts-list">'+list+'</div>'+
     '</div>'+
-  '</section>'+
-  '<div style="background:var(--cream);">'+waveSVG("wave-orange-to-cream", true)+'</div>';
+  '</section>';
 }
 
 function contactHTML(){
@@ -684,6 +722,17 @@ function openModal(title, fields, onSave, onDeleteLabel, onDelete){
   var backdrop = document.createElement("div");
   backdrop.className = "modal-backdrop";
   var fieldsHTML = fields.map(function(f){
+    if(f.type === "image"){
+      return '<div class="field field-image">'+
+        '<label>'+f.label+'</label>'+
+        '<div class="image-preview" id="preview-'+f.key+'">'+
+          (f.value ? '<img src="'+f.value+'" alt="">' : '<span class="image-preview-empty">Aucune photo</span>')+
+        '</div>'+
+        '<input type="file" accept="image/*" id="file-'+f.key+'">'+
+        (f.value ? '<button type="button" class="btn btn-ghost btn-sm" data-remove-image="'+f.key+'">Retirer la photo</button>' : '')+
+        '<input type="hidden" id="fld-'+f.key+'" value="'+esc(f.value||"")+'">'+
+      '</div>';
+    }
     var tag = f.type === "textarea" ? "textarea" : "input";
     var attrs = f.type && f.type !== "textarea" ? ' type="'+f.type+'"' : "";
     var valueAttr = tag === "input" ? ' value="'+esc(f.value||"")+'"' : "";
@@ -704,6 +753,26 @@ function openModal(title, fields, onSave, onDeleteLabel, onDelete){
   document.body.appendChild(backdrop);
   backdrop.addEventListener("click", function(e){ if(e.target === backdrop) close(); });
   function close(){ backdrop.remove(); }
+  fields.forEach(function(f){
+    if(f.type !== "image") return;
+    var fileInput = backdrop.querySelector("#file-"+f.key);
+    var hidden = backdrop.querySelector("#fld-"+f.key);
+    var preview = backdrop.querySelector("#preview-"+f.key);
+    fileInput.addEventListener("change", function(){
+      var file = fileInput.files && fileInput.files[0];
+      if(!file) return;
+      resizeImageFile(file, 1000, 0.82).then(function(dataUrl){
+        hidden.value = dataUrl;
+        preview.innerHTML = '<img src="'+dataUrl+'" alt="">';
+      }).catch(function(){ showToast("Impossible de charger cette photo (format ou taille non pris en charge)."); });
+    });
+    var removeBtn = backdrop.querySelector('[data-remove-image="'+f.key+'"]');
+    if(removeBtn) removeBtn.addEventListener("click", function(){
+      hidden.value = "";
+      preview.innerHTML = '<span class="image-preview-empty">Aucune photo</span>';
+      removeBtn.remove();
+    });
+  });
   backdrop.querySelector("#modal-cancel").addEventListener("click", close);
   if(onDelete){
     backdrop.querySelector("#modal-delete").addEventListener("click", function(){ close(); onDelete(); });
@@ -779,12 +848,13 @@ function addPortfolio(){
   openModal("Nouvelle réalisation", [
     {key:"title", label:"Nom du client / projet", value:""},
     {key:"category", label:"Catégorie", value:""},
-    {key:"description", label:"Description", type:"textarea", value:""}
+    {key:"description", label:"Description", type:"textarea", value:""},
+    {key:"image", label:"Photo du projet (optionnel)", type:"image", value:""}
   ], function(v){
     if(!v.title) return;
     var next = JSON.parse(JSON.stringify(state));
     var colors = ["var(--orange)","var(--plum)","var(--orange-dark)","var(--plum-soft)"];
-    next.portfolio.push({id:uid("p"), title:v.title, category:v.category||"Projet", description:v.description||"", color:colors[next.portfolio.length % colors.length]});
+    next.portfolio.push({id:uid("p"), title:v.title, category:v.category||"Projet", description:v.description||"", image:v.image||"", color:colors[next.portfolio.length % colors.length]});
     persist(next, "Réalisation ajoutée.");
   });
 }
@@ -794,11 +864,12 @@ function editPortfolio(id){
   openModal("Modifier la réalisation", [
     {key:"title", label:"Nom du client / projet", value:item.title},
     {key:"category", label:"Catégorie", value:item.category},
-    {key:"description", label:"Description", type:"textarea", value:item.description}
+    {key:"description", label:"Description", type:"textarea", value:item.description},
+    {key:"image", label:"Photo du projet (optionnel)", type:"image", value:item.image||""}
   ], function(v){
     var next = JSON.parse(JSON.stringify(state));
     var it = next.portfolio.find(function(p){return p.id===id;});
-    it.title = v.title||it.title; it.category = v.category||it.category; it.description = v.description||it.description;
+    it.title = v.title||it.title; it.category = v.category||it.category; it.description = v.description||it.description; it.image = v.image||"";
     persist(next, "Réalisation modifiée.");
   }, "Supprimer", function(){ deletePortfolio(id); });
 }
