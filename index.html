@@ -991,7 +991,8 @@ function buildFullDocument(newState){
     '<title>Atlas Communication 360°</title>'+
     '<meta name="description" content="Atlas Communication 360°, agence de communication : community management, création de contenu, stratégie de développement commercial, événementiel et formation.">'+
     FONT_LINKS+
-    '<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}'+CSS_TEXT_SOURCE+'</style>'+
+    '<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}</style>'+
+    '<style id="app-style">'+CSS_TEXT_SOURCE+'</style>'+
     '</head>';
   var body =
     '<body>'+
@@ -1006,6 +1007,7 @@ function persist(newState, successMsg){
   state = newState;
   paint();
   if(!artifactCap){ showToast("Aperçu local uniquement : publiez la page pour activer l'édition."); return; }
+  if(!CSS_TEXT_SOURCE){ showToast("Style de la page introuvable : publication annulée pour ne pas casser la mise en page."); return; }
   artifactCap.publish(buildFullDocument(newState)).then(function(){
     showToast(successMsg || "Modifications publiées.");
   }).catch(function(err){
